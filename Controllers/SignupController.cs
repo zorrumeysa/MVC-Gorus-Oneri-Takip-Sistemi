@@ -94,7 +94,7 @@ namespace MVCGorusOneriSistemiApp.Content
         public ActionResult Login(string email, string parola)
         {
             var response = Request["g-recaptcha-response"];
-            const string secret = "6LeMSOsqAAAAAJP6RIS2X-C6ZH__3bEK8aLSJJYR";
+            const string secret = "recaptcha";
 
             var client = new WebClient();
             var reply = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, response));
