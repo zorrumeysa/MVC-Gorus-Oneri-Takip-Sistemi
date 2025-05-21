@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Yetkili Giriş</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <style>
+        .from-signin {
+            max-width: 64px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="form-signin col-sm-6 m-auto my-lg-5 ">
+        @using (Html.BeginForm("Index", "Yetkili", FormMethod.Post))
+        {
+            <h1 class="h3 mb-3 fw-normal">Noksel Görüş Öneri Sistemi Yetkili Girişi</h1>
+            <div class="form-floating my-4">
+                <input type="text" class="form-control" id="floatingName" name="ad" placeholder="ad" required />
+                <label for="floatingName">Kullanıcı Adı</label>
+            </div>
+            <div class="form-floating my-4">
+                <input type="password" class="form-control" id="floatingPassword" name="parola" placeholder="password" required />
+                <label for="floatingPassword">Parola</label>
+            </div>
+            <div class="form-floating mt-4">
+                <div class="g-recaptcha" data-sitekey="6LeMSOsqAAAAAOr2M2BDRFMpId7t7750A5EDBIj1" name="g-recaptcha-response"></div>
+            </div>
+            <button class="btn btn-outline-primary w-100 py-2" type="submit">Giriş Yap</button>
+            if (@ViewBag.hataMesaj != null)
+            {
+                <div class="alert alert-danger mt-3" role="alert">
+                    @ViewBag.hataMesaj
+                </div>
+            }
+        }
+    </main>
+</body>
+</html>

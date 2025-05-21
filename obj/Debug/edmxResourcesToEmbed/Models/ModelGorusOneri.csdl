@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GorusOneriSistemiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Uyeler">
+    <Key>
+      <PropertyRef Name="uyeId" />
+    </Key>
+    <Property Name="uyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="uyeAdSoyad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="uyeEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="uyeParola" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="uyelikTarihi" Type="DateTime" Precision="3" />
+    <Property Name="uyeAktiflik" Type="Boolean" />
+    <Property Name="uyeTelefon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Talepler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Uyeler" FromRole="Uyeler" ToRole="Talepler" />
+  </EntityType>
+  <EntityContainer Name="GorusOneriSistemiDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Uyeler" EntityType="Self.Uyeler" />
+    <EntitySet Name="Birimler" EntityType="GorusOneriSistemiDBModel.Birimler" />
+    <EntitySet Name="Durumlar" EntityType="GorusOneriSistemiDBModel.Durumlar" />
+    <EntitySet Name="Talepler" EntityType="GorusOneriSistemiDBModel.Talepler" />
+    <EntitySet Name="Tipler" EntityType="GorusOneriSistemiDBModel.Tipler" />
+    <AssociationSet Name="FK_Talepler_Birimler" Association="GorusOneriSistemiDBModel.FK_Talepler_Birimler">
+      <End Role="Birimler" EntitySet="Birimler" />
+      <End Role="Talepler" EntitySet="Talepler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Talepler_Durumlar" Association="GorusOneriSistemiDBModel.FK_Talepler_Durumlar">
+      <End Role="Durumlar" EntitySet="Durumlar" />
+      <End Role="Talepler" EntitySet="Talepler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Talepler_Tipler" Association="GorusOneriSistemiDBModel.FK_Talepler_Tipler">
+      <End Role="Tipler" EntitySet="Tipler" />
+      <End Role="Talepler" EntitySet="Talepler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Talepler_Uyeler" Association="GorusOneriSistemiDBModel.FK_Talepler_Uyeler">
+      <End Role="Uyeler" EntitySet="Uyeler" />
+      <End Role="Talepler" EntitySet="Talepler" />
+    </AssociationSet>
+    <EntitySet Name="YetkiliBirimler" EntityType="GorusOneriSistemiDBModel.YetkiliBirimler" />
+    <EntitySet Name="Yetkililer" EntityType="GorusOneriSistemiDBModel.Yetkililer" />
+    <AssociationSet Name="FK_YetkiliBirimler_Birimler" Association="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Birimler">
+      <End Role="Birimler" EntitySet="Birimler" />
+      <End Role="YetkiliBirimler" EntitySet="YetkiliBirimler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_YetkiliBirimler_Yetkililer" Association="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Yetkililer">
+      <End Role="Yetkililer" EntitySet="Yetkililer" />
+      <End Role="YetkiliBirimler" EntitySet="YetkiliBirimler" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Birimler">
+    <Key>
+      <PropertyRef Name="birimId" />
+    </Key>
+    <Property Name="birimId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="birimAd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="birimAktiflik" Type="Boolean" />
+    <NavigationProperty Name="Talepler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Birimler" FromRole="Birimler" ToRole="Talepler" />
+    <NavigationProperty Name="YetkiliBirimler" Relationship="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Birimler" FromRole="Birimler" ToRole="YetkiliBirimler" />
+  </EntityType>
+  <EntityType Name="Durumlar">
+    <Key>
+      <PropertyRef Name="durumId" />
+    </Key>
+    <Property Name="durumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="durumAd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Talepler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Durumlar" FromRole="Durumlar" ToRole="Talepler" />
+  </EntityType>
+  <EntityType Name="Talepler">
+    <Key>
+      <PropertyRef Name="talepId" />
+    </Key>
+    <Property Name="talepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="uyeId" Type="Int32" />
+    <Property Name="birimId" Type="Int32" />
+    <Property Name="durumId" Type="Int32" />
+    <Property Name="tipId" Type="Int32" />
+    <Property Name="talepBaslik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="talepMesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="olusturulmaTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Birimler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Birimler" FromRole="Talepler" ToRole="Birimler" />
+    <NavigationProperty Name="Durumlar" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Durumlar" FromRole="Talepler" ToRole="Durumlar" />
+    <NavigationProperty Name="Tipler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Tipler" FromRole="Talepler" ToRole="Tipler" />
+    <NavigationProperty Name="Uyeler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Uyeler" FromRole="Talepler" ToRole="Uyeler" />
+    <Property Name="talepCevap" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Tipler">
+    <Key>
+      <PropertyRef Name="tipId" />
+    </Key>
+    <Property Name="tipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipAd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Talepler" Relationship="GorusOneriSistemiDBModel.FK_Talepler_Tipler" FromRole="Tipler" ToRole="Talepler" />
+  </EntityType>
+  <Association Name="FK_Talepler_Birimler">
+    <End Type="GorusOneriSistemiDBModel.Birimler" Role="Birimler" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.Talepler" Role="Talepler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birimler">
+        <PropertyRef Name="birimId" />
+      </Principal>
+      <Dependent Role="Talepler">
+        <PropertyRef Name="birimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Talepler_Durumlar">
+    <End Type="GorusOneriSistemiDBModel.Durumlar" Role="Durumlar" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.Talepler" Role="Talepler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Durumlar">
+        <PropertyRef Name="durumId" />
+      </Principal>
+      <Dependent Role="Talepler">
+        <PropertyRef Name="durumId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Talepler_Tipler">
+    <End Type="GorusOneriSistemiDBModel.Tipler" Role="Tipler" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.Talepler" Role="Talepler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipler">
+        <PropertyRef Name="tipId" />
+      </Principal>
+      <Dependent Role="Talepler">
+        <PropertyRef Name="tipId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Talepler_Uyeler">
+    <End Type="GorusOneriSistemiDBModel.Uyeler" Role="Uyeler" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.Talepler" Role="Talepler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uyeler">
+        <PropertyRef Name="uyeId" />
+      </Principal>
+      <Dependent Role="Talepler">
+        <PropertyRef Name="uyeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="YetkiliBirimler">
+    <Key>
+      <PropertyRef Name="yetkiliBirimId" />
+    </Key>
+    <Property Name="yetkiliBirimId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yetkiliId" Type="Int32" />
+    <Property Name="birimId" Type="Int32" />
+    <NavigationProperty Name="Birimler" Relationship="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Birimler" FromRole="YetkiliBirimler" ToRole="Birimler" />
+    <NavigationProperty Name="Yetkililer" Relationship="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Yetkililer" FromRole="YetkiliBirimler" ToRole="Yetkililer" />
+  </EntityType>
+  <EntityType Name="Yetkililer">
+    <Key>
+      <PropertyRef Name="yetkiliId" />
+    </Key>
+    <Property Name="yetkiliId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="yekiliAd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="YetkiliBirimler" Relationship="GorusOneriSistemiDBModel.FK_YetkiliBirimler_Yetkililer" FromRole="Yetkililer" ToRole="YetkiliBirimler" />
+    <Property Name="yetkiliParola" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_YetkiliBirimler_Birimler">
+    <End Type="GorusOneriSistemiDBModel.Birimler" Role="Birimler" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.YetkiliBirimler" Role="YetkiliBirimler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birimler">
+        <PropertyRef Name="birimId" />
+      </Principal>
+      <Dependent Role="YetkiliBirimler">
+        <PropertyRef Name="birimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_YetkiliBirimler_Yetkililer">
+    <End Type="GorusOneriSistemiDBModel.Yetkililer" Role="Yetkililer" Multiplicity="0..1" />
+    <End Type="GorusOneriSistemiDBModel.YetkiliBirimler" Role="YetkiliBirimler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Yetkililer">
+        <PropertyRef Name="yetkiliId" />
+      </Principal>
+      <Dependent Role="YetkiliBirimler">
+        <PropertyRef Name="yetkiliId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
